@@ -34,7 +34,10 @@ void insereFim(Tdescritor* descritor, Tdados* dados) {
 	
 	nodoaux->dados = dados;
 	nodoaux->proximo = NULL;
-	
+	if(descritor == NULL) {
+		printf("Fila Inexistente - Crie a Fila Primeiro");
+		return;
+	}
 	//se a lista estiver vazia
 	if(descritor->first == NULL) {
 		descritor->first = nodoaux;
@@ -55,6 +58,11 @@ Tdados* insereDados(int numero, char nome[]) {
 }
 
 void removeInicio(Tdescritor* lista){
+	if(lista == NULL){
+		printf("Fila Inexistente - Crie a fila primeiro");
+		return;
+	}
+
 	TNodo *nodoaux;
 	nodoaux = lista->first;
 
@@ -67,10 +75,16 @@ void removeInicio(Tdescritor* lista){
 		lista->first = lista->first->proximo; 
 	}
 	free(nodoaux);
+	printf("\nRemovido com Sucesso !!\n");
+
 }
 
 void imprimeLista(Tdescritor* lista) {
-	TNodo *aux = lista->first;
+	if(lista == NULL) {
+		printf("Fila Inexistente - Crie a fila primeiro");
+		return;
+	}
+		TNodo *aux = lista->first;
 	if(lista->first == NULL) {
 		printf("\n ########### WARNING ############## \n Lista Vazia\n");
 	}
@@ -84,7 +98,7 @@ void imprimeLista(Tdescritor* lista) {
 
 int main(int argc, char *argv[]) {
 	
-	Tdescritor* lista;
+	Tdescritor* lista = NULL;
 	int opcao,numero;
 	char nome[20];
 	while(opcao != 5){
@@ -101,22 +115,28 @@ int main(int argc, char *argv[]) {
 		scanf("%d", &opcao);
 		if(opcao == 1) {
 			lista = criaLista();
-			printf("Lista criada com Sucesso !");
+			printf("Fila criada com Sucesso !");
 		}
 		if(opcao == 2) {
-			printf("\n------------------------------");
-			printf("\n     Inserir Valores");
-			printf("\n------------------------------");
-			printf("\nDigite o numero da matricula:");
-			scanf("%d", &numero);
-			printf("\nDigite o nome do aluno:");
-			scanf("%s", nome);
-			Tdados* dados = insereDados(numero, nome);
-			insereFim(lista, dados);
+			if(lista) {
+				printf("\n------------------------------");
+				printf("\n     Inserir Valores");
+				printf("\n------------------------------");
+				printf("\nDigite o numero da matricula:");
+				scanf("%d", &numero);
+				printf("\nDigite o nome do aluno:");
+				scanf("%s", nome);
+				Tdados* dados = insereDados(numero, nome);
+				insereFim(lista, dados);
+			}
+			else {
+				printf("Fila Inexistente - Crie a fila primeiro");
+		
+			}
+			
 		}
 		if(opcao == 3) {
 			removeInicio(lista);
-			printf("\nRemovido com Sucesso !!\n");
 		}
 		if(opcao == 4) {
 			printf("\n-------- FILA --------\n");
